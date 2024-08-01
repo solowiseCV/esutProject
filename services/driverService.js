@@ -1,13 +1,14 @@
 import Driver from '../models/driver.js';
 
 const registerDriver = async (driverData) => {
-    const { user, name, email, licenseNumber } = driverData;
+    const { user, name, email, licenseNumber,licenseImg } = driverData;
 
     const newDriver = new Driver({
         user,
         name,
         email,
-        licenseNumber
+        licenseNumber,
+        licenseImg,
     });
 
     return await newDriver.save();

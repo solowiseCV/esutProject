@@ -21,10 +21,15 @@ const driverSchema = mongoose.Schema({
         required: [true, "License number is required"],
         trim: true,
     },
+    licenseImg: {
+        type: String,
+        required: [true, "License image is required"],
+       
+    },
     isVerified: {
         type: Boolean,
         default: false
-    }
+    },
 });
 
 export default mongoose.model("Driver", driverSchema);

@@ -6,12 +6,15 @@ const registerDriverController = async (req, res) => {
             user: req.user.id,
             name: req.body.name,
             email: req.body.email,
-            licenseNumber: req.body.licenseNumber
+            licenseNumber: req.body.licenseNumber,
+            licenseImg: req.body.licenseImg,
+
         };
         const newDriver = await registerDriver(driverData);
         res.status(201).json(newDriver);
     } catch (error) {
         res.status(400).json({ message: error.message });
+        console.log(error);
     }
 };
 
