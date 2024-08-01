@@ -30,6 +30,11 @@ const driverSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        
+    }
 });
 
 export default mongoose.model("Driver", driverSchema);

@@ -1,17 +1,38 @@
 import Driver from '../models/driver.js';
+import verifyDriverDetails from '../utils/veifyDriver.js';
 
 const registerDriver = async (driverData) => {
-    const { user, name, email, licenseNumber,licenseImg } = driverData;
+    const { name, email, licenseNumber ,licenseImg} = driverData;
 
-    const newDriver = new Driver({
-        user,
-        name,
-        email,
-        licenseNumber,
-        licenseImg,
+    // Verify driver details
+    const isVerified = verifyDriverDetails(name, email, licenseNumber,licenseImg)
+
+    // Create a new driver with verification status
+    const driver = new Driver({
+        ...driverData,
+        isVerified: isVerified
     });
 
-    return await newDriver.save();
+    await driver.save();
+    return driver;
+};
+
+const verifyDriver = async (driverId) => {
+    const driver = await Driver.findById(driverId);
+    if (!driver) {
+        throw new Error('Driver not found');
+    }
+
+    // Perform verification
+    const isVerified = verifyDriverDetails(driver.name, driver.email, driver.licenseNumber);
+
+    // Update driver's verification status
+    if (isVerified) {
+        driver.isVerified = true;
+        await driver.save();
+    }
+
+    return driver;
 };
 
 const getAllDrivers = async () => {
@@ -30,6 +51,4 @@ const deleteDriver = async (id) => {
     return await Driver.findByIdAndDelete(id);
 };
 
-export { registerDriver, getAllDrivers, getDriverById, updateDriver, deleteDriver };
-
-
+export { registerDriver, verifyDriver, getAllDrivers, getDriverById, updateDriver, deleteDriver };

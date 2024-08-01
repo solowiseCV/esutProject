@@ -18,7 +18,11 @@ const userSchema = mongoose.Schema({
         required: [true, "Password is required"],
         trim: true,
 
-    }
+    },
+    drivers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Driver'
+    }]
 });
 
 export default mongoose.model("User", userSchema);

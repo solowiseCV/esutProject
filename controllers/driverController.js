@@ -1,4 +1,4 @@
-import { registerDriver, getAllDrivers, getDriverById, updateDriver, deleteDriver } from '../services/driverService.js';
+import { registerDriver, verifyDriver, getAllDrivers, getDriverById, updateDriver, deleteDriver } from '../services/driverService.js';
 
 const registerDriverController = async (req, res) => {
     try {
@@ -8,13 +8,20 @@ const registerDriverController = async (req, res) => {
             email: req.body.email,
             licenseNumber: req.body.licenseNumber,
             licenseImg: req.body.licenseImg,
-
         };
         const newDriver = await registerDriver(driverData);
         res.status(201).json(newDriver);
     } catch (error) {
         res.status(400).json({ message: error.message });
-        console.log(error);
+    }
+};
+
+const verifyDriverController = async (req, res) => {
+    try {
+        const driver = await verifyDriver(req.params.id);
+        res.status(200).json(driver);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
     }
 };
 
@@ -54,4 +61,4 @@ const remove = async (req, res) => {
     }
 };
 
-export { registerDriverController, getAll, getById, update, remove };
+export { registerDriverController, verifyDriverController, getAll, getById, update, remove };
