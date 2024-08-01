@@ -17,6 +17,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/drivers', driverRoutes);
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
+app.get("/", (req, res) => {
+  res.send("Welcome to home route, Please sign up or log in to continue");
+});
+
 
 const connect = async () => {
     try {
